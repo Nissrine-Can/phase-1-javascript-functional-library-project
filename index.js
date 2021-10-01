@@ -17,34 +17,36 @@ function myMap(collection, callback) {
    return newArray
 }
 
-/*function myReduce(collection, callback, acc) {
+function myReduce(collection, callback, acc) {
     const collectionArr = collection instanceof Array === true? collection : Object.values(collection)
+let accumulator = acc || collectionArr[0];
 
-let acc = collectionArr[0];
 for (let i = 0; i < collectionArr.length; i++) {
-    if (i === 0 & !collectionArr[0]) {
+    if (i === 0 && !acc) {
         continue;
     }
-    acc = callback(acc, collectionArr[i]) 
-        
+    const reducedValue = callback(accumulator, collectionArr[i], i, collectionArr) 
+          accumulator = reducedValue
 }
-return acc
-}*/
+ return accumulator
+}
 
 
 function myFind(collection, callback) {
     
 const collectionArr = collection instanceof Array === true? collection : Object.values(collection)
- let firstValueFound = collectionArr[i]
-    while (i < firstValueFound.length) { 
+let i = 0
+ 
+let firstValueFound = collectionArr[i]
+    while (i < collectionArr.length) { 
+        firstValueFound = collectionArr[i]
         const truthyValue = callback(collectionArr[i], i, collectionArr);
         if (truthyValue) {
-            firstValueFound
-            break;
+            return firstValueFound
+            
         }
         i++
    }
-    return firstValueFound
 }
 
 function myFilter(collection, callback) {
@@ -59,4 +61,46 @@ function myFilter(collection, callback) {
    }
     
 return newArray
+}
+
+function mySize(collection) {
+    const collectionArr = collection instanceof Array === true? collection : Object.values(collection)
+    let size = collectionArr.length
+    return size
+}
+
+function myFirst(collection, n) {
+    const collectionArr = collection instanceof Array === true? collection : Object.values(collection)
+    
+    if (n > 1) {
+    collectionArr.splice(n)
+    return collectionArr
+} else if (n=1) {
+    return collectionArr[0]
+}
+}
+function myLast(collection, n) {
+    const collectionArr = collection instanceof Array === true? collection : Object.values(collection)
+    if (n >= 0) {
+         return collectionArr.slice(-n)
+    } else {
+        return collectionArr[collectionArr.length - 1]
+    }
+}
+
+function myKeys(object) {
+    let keyArr = []
+    for (const key in object) {
+         
+         keyArr.push(key)
+     }
+     return keyArr
+}
+
+function myValues(object) {
+     let valArr = []
+    for (const key in object) {
+         valArr.push(object[key])
+}
+return valArr
 }
